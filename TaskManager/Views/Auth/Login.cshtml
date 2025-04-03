@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/Auth/Signup">Sign up</a></p>
+        <div id="errorMessage" class="error-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorElement = document.getElementById("errorMessage");
+
+            // Clear previous errors
+            errorElement.textContent = "";
+
+            try {
+                const response = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || "Login failed");
+                }
+
+                const data = await response.json();
+
+                // Store token securely
+                localStorage.setItem("jwtToken", data.token);
+
+                // Redirect to home page
+                window.location.href = "/";
+
+            } catch (error) {
+                console.error("Login error:", error);
+                errorElement.textContent = error.message || "An error occurred during login";
+            }
+        });
+    </script>
+</body>
+</html>
