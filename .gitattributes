@@ -1,0 +1,26 @@
+# Normalize text files to LF (prevents CRLF issues on Windows)
+* text=auto
+
+# Ensure C# and configuration files are treated as text
+*.cs     diff=csharp
+*.csproj text
+*.sln    text
+*.config text
+*.json   text
+*.xml    text
+*.html   text
+*.css    text
+*.js     text
+
+# Set binary files to be handled correctly
+*.dll    binary
+*.exe    binary
+*.png    binary
+*.jpg    binary
+*.gif    binary
+*.ico    binary
+*.pdf    binary
+*.zip    binary
+
+# Prevent line-ending issues for shell scripts
+*.sh     text eol=lf
