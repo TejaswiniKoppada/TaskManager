@@ -1,4 +1,5 @@
 Task Manager
+
 Overview
 The Task Manager is a web-based application built using ASP.NET Core MVC that enables users to efficiently manage their tasks. It provides a structured interface for task creation, updating, deletion, and completion, ensuring better productivity and organization. The application follows the Model-View-Controller (MVC) design pattern and incorporates asynchronous processing, state management, and JWT-based authentication to enhance security and performance.
 
